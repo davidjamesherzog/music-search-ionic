@@ -1,43 +1,47 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Platform, MenuController, Nav } from 'ionic-angular';
+//import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
+import { ITunes } from '../providers/itunes/itunes';
+import { MusicPage } from '../pages/music/music';
 
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [ITunes]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  // make HelloIonicPage the root (or first) page
+  rootPage: any = MusicPage;
+  pages: Array<{title: string, component: any}>;
 
-  pages: Array<{ title: string, component: any }>;
+  constructor(
+    public platform: Platform,
+    public menu: MenuController
+  ) {
+    this.initializeApp();
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    // used for an example of ngFor and navigation
+    // set our app's pages
     this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 }
+      { title: 'Music', component: MusicPage }
     ];
-
   }
 
-  ionViewDidLoad() {
+  initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      //StatusBar.styleDefault();
+      //Splashscreen.hide();
     });
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
+    // close the menu when clicking a link from the menu
+    this.menu.close();
+    // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
 }

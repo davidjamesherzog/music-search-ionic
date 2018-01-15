@@ -2,33 +2,28 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { MusicPage } from '../pages/music/music'
+import { MusicDetailsPage } from '../pages/music-details/music-details'
+import { HttpModule, JsonpModule } from '@angular/http';
 
 @NgModule({
   declarations: [
     MyApp,
-    Page1,
-    Page2
+    MusicPage,
+    MusicDetailsPage
   ],
   imports: [
+    IonicModule.forRoot(MyApp),
     BrowserModule,
-    IonicModule.forRoot(MyApp, {}, { links: [] })
+    HttpModule,
+    JsonpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
-    Page2
+    MusicPage,
+    MusicDetailsPage
   ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
-  ]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
-export class AppModule { }
+export class AppModule {}
